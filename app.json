@@ -1,0 +1,12 @@
+{
+  "name": "mysteryrun",
+  "displayName": "mysteryrun",
+  "expo": {
+    "name": "mysteryrun",
+    "slug": "mysteryrun",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
