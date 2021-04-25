@@ -2,8 +2,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { View } from "react-native";
+import { EventsScreen } from "./EventsScreen";
 import {MainScreen} from "./MainScreen/MainScreen"
 import { PuzzleStackScreen } from "./PuzzleStack/PuzzleStackScreen";
+import { SettingsScreen } from "./SettingsScreen";
 
 const MainStack = createStackNavigator();
 
@@ -16,8 +18,12 @@ export function MainStackScreen() {
                 options = {{headerShown: false}}
             />
             <MainStack.Screen
-                name = "Events"
-                component = {PuzzleStackScreen}
+                name = "EventsScreen"
+                component = {EventsScreen}
+            />
+            <MainStack.Screen
+                name = "SettingsScreen"
+                component = {SettingsScreen}
             />
                     
         </MainStack.Navigator>

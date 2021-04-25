@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
-export function EventsScreen() {
+export function SettingsScreen({navigation}) {
     return (
         <View>
             <Text>
