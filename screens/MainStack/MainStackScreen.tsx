@@ -4,7 +4,6 @@ import React from "react";
 import { View } from "react-native";
 import { EventsScreen } from "./EventsScreen";
 import { MainScreen } from "./MainScreen/MainScreen";
-import PuzzleMapScreen from "./PuzzleMapScreen";
 import { PuzzleStackScreen } from "./PuzzleStack/PuzzleStackScreen";
 import { SettingsScreen } from "./SettingsScreen";
 
@@ -18,9 +17,13 @@ export function MainStackScreen() {
         component={MainScreen}
         options={{ headerShown: false }}
       />
+      <MainStack.Screen
+      name = "PuzzleStack"
+      component = {PuzzleStackScreen}
+      options = {{headerShown: false}}
+      />
       <MainStack.Screen name="EventsScreen" component={EventsScreen} />
       <MainStack.Screen name="SettingsScreen" component={SettingsScreen} />
-      <MainStack.Screen name="PuzzleMapScreen" component={PuzzleMapScreen} />
     </MainStack.Navigator>
   );
 }

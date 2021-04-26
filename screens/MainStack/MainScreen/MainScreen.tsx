@@ -4,22 +4,25 @@ import MapView, { Marker } from "react-native-maps";
 import { greaterThan } from "react-native-reanimated";
 import { Appbar, Card, Button, Headline } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 export function MainScreen({ navigation }) {
   const dimensionprint = () => {
-    console.warn(Dimensions.get("window").width);
+    console.warn(Dimensions.get("window").width); 
     console.warn(Dimensions.get("window").height);
   };
+
   const runningIcon = () => {
-    return <Icon style={styles.runningIcon} name="running" size={200} />;
+    return <Icon style={mainScreenStyles.runningIcon} name="running" size={200} />;
   };
 
   const playButton = () => {
     return (
-      <TouchableOpacity style={styles.playButton}>
-        <Text> Puzzles </Text>
-      </TouchableOpacity>
+      <View style={mainScreenStyles.playButton}>
+        <TouchableOpacity  onPress = {() => navigation.navigate('PuzzleStack')}>
+          <Text> Puzzles </Text>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -27,7 +30,7 @@ export function MainScreen({ navigation }) {
 
   const BottomBar = () => {
     return (
-      <Appbar style={styles.bottom}>
+      <Appbar style={mainScreenStyles.bottom}>
         <Appbar.Action
           icon="cog-outline"
           onPress={() => navigation.navigate("SettingsScreen")}
@@ -35,7 +38,7 @@ export function MainScreen({ navigation }) {
 
         <Appbar.Action
           icon="poll"
-          onPress={() => navigation.navigate("PuzzleMapScreen")}
+          //onPress={() => navigation.navigate("PuzzleMapScreen")}
         />
 
         <Appbar.Action icon="newspaper-variant" />
@@ -45,15 +48,15 @@ export function MainScreen({ navigation }) {
 
   const TopBar = () => {
     return (
-      <Appbar style={styles.top}>
+      <Appbar style={mainScreenStyles.top}>
         <Appbar.Content title="Mystery Run" />
       </Appbar>
     );
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.middlePinkBox} />
+    <View style={mainScreenStyles.container}>
+      <View style={mainScreenStyles.middlePinkBox} />
       {playButton()}
       {runningIcon()}
       {BottomBar()}
@@ -62,7 +65,7 @@ export function MainScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+export const mainScreenStyles = StyleSheet.create({
   bottom: {
     position: "absolute",
     left: 0,
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    top: 380,
+    top: 400,
     left: 80,
     padding: 10,
     borderColor: "#FF52BA",
