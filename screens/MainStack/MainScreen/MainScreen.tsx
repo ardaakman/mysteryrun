@@ -5,7 +5,6 @@ import { greaterThan } from "react-native-reanimated";
 import { Appbar, Card, Button, Headline } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {SettingsScreen} from 
 
 export function MainScreen({ navigation }) {
   const dimensionprint = () => {
@@ -24,7 +23,7 @@ export function MainScreen({ navigation }) {
     );
   };
 
-  // dimensionprint();
+  //dimensionprint();
 
   const BottomBar = () => {
     return (
@@ -34,7 +33,10 @@ export function MainScreen({ navigation }) {
           onPress={() => navigation.navigate("SettingsScreen")}
         />
 
-        <Appbar.Action icon="poll" />
+        <Appbar.Action
+          icon="poll"
+          onPress={() => navigation.navigate("PuzzleMapScreen")}
+        />
 
         <Appbar.Action icon="newspaper-variant" />
       </Appbar>

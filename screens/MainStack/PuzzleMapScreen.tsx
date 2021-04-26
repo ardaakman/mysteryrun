@@ -14,28 +14,35 @@ import { greaterThan } from "react-native-reanimated";
 import * as Location from "expo-location";
 
 export default function PuzzleMapScreen({ navigation, route }) {
-  const [curLoc, setCurLoc] = useState("");
+  const [location, setLocation] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  function findCoordinates() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const location = JSON.stringify(position);
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
 
-        setCurLoc(location);
-      },
-      (error) => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
   }
 
   return (
     <View>
-      <TouchableOpacity onPress={findCoordinates()}>
-        <Text style={styles.welcome}>Find My Coords?</Text>
-        <Text>Location: {curLoc}</Text>
-      </TouchableOpacity>
+      <Text>Location: {text}</Text>
       <MapView
         style={styles.mapStyle}
+        showsUserLocation={true}
         initialRegion={{
           latitude: 37.9,
           longitude: -122.253982,
