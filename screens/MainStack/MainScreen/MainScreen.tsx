@@ -5,6 +5,7 @@ import { greaterThan } from "react-native-reanimated";
 import { Appbar, Card, Button, Headline } from "react-native-paper";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {SettingsScreen} from 
 
 
 
