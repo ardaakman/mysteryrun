@@ -41,12 +41,6 @@ export function PuzzleListScreen({ navigation }) {
           </Paragraph>
         </Card.Content>
       </Card>
-      <SlidingUpPanel>
-        <View style={styles.container}>
-          <Text>Here is the content inside panel</Text>
-          <Button title="Hide" onPress={2} />
-        </View>
-      </SlidingUpPanel>
     </View>
   );
 }

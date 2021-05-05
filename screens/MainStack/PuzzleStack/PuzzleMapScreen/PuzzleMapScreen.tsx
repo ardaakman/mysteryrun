@@ -18,7 +18,6 @@ import { listStyles } from "../PuzzleListScreen/PuzzleListScreenStyles";
 export default function PuzzleMapScreen({ navigation, route }) {
   const [location, setLocation] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -31,20 +30,38 @@ export default function PuzzleMapScreen({ navigation, route }) {
       setLocation(location);
     })();
   }, []);
+  
 
   let text = "Waiting..";
+  let latitude = "";
+  let longitude = "";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
+    latitude = JSON.stringify(location.coords.latitude)
+    longitude = JSON.stringify(location.coords.longitude)
   }
+
   class SlidingPanel extends React.Component {
     render() {
       return (
         <View style={styles.slideStyle}>
-          <SlidingUpPanel ref={(c) => (this._panel = c)}>
+          <SlidingUpPanel ref={(c) => (this._panel = c)}
+          draggableRange = {{
+            top : Dimensions.get("window").height-50,
+            bottom: 0
+          }}
+
+          >
             <View style={styles.container}>
               <Text style={styles.headerTextStyle}>Puzzle Information</Text>
+              <Text style = {styles.positionTextStyle}>
+                Your current position is : 
+              </Text>
+              <Text style = {styles.positionTextStyle}>
+                ({latitude} , {longitude})
+              </Text>
               <Text style={styles.puzzleTextStyle}>
                 Please proceed to the location on the map to begin.
               </Text>
@@ -57,7 +74,6 @@ export default function PuzzleMapScreen({ navigation, route }) {
 
   return (
     <View>
-      <Text>Location: {text}</Text>
       <MapView
         style={styles.mapStyle}
         showsUserLocation={true}
@@ -91,7 +107,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height * 0.8,
+    height: Dimensions.get("window").height,
   },
   headerStyle: {
     backgroundColor: "#003262",
@@ -134,6 +150,11 @@ const styles = StyleSheet.create({
   puzzleTextStyle: {
     fontFamily: "Roboto",
     fontSize: 12,
-    marginTop: 300,
+    marginTop: 100,
+  },
+  positionTextStyle: {
+    fontFamily: "Roboto",
+    fontSize: 12,
+    marginTop: 10,
   },
 });
