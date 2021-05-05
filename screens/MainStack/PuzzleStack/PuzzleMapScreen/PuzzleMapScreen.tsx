@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { Appbar, Card, Headline } from "react-native-paper";
 import { greaterThan } from "react-native-reanimated";
 import * as Location from "expo-location";
 import SlidingUpPanel from "rn-sliding-up-panel";
@@ -30,7 +31,6 @@ export default function PuzzleMapScreen({ navigation, route }) {
       setLocation(location);
     })();
   }, []);
-  
 
   let text = "Waiting..";
   let latitude = "";
@@ -39,27 +39,27 @@ export default function PuzzleMapScreen({ navigation, route }) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    latitude = JSON.stringify(location.coords.latitude)
-    longitude = JSON.stringify(location.coords.longitude)
+    //latitude = JSON.stringify(location.coords.latitude)
+    //longitude = JSON.stringify(location.coords.longitude)
   }
 
   class SlidingPanel extends React.Component {
     render() {
       return (
         <View style={styles.slideStyle}>
-          <SlidingUpPanel ref={(c) => (this._panel = c)}
-          draggableRange = {{
-            top : Dimensions.get("window").height-50,
-            bottom: 0
-          }}
-
+          <SlidingUpPanel
+            ref={(c) => (this._panel = c)}
+            draggableRange={{
+              top: Dimensions.get("window").height - 100,
+              bottom: 0,
+            }}
           >
             <View style={styles.container}>
               <Text style={styles.headerTextStyle}>Puzzle Information</Text>
-              <Text style = {styles.positionTextStyle}>
-                Your current position is : 
+              <Text style={styles.positionTextStyle}>
+                Your current position is :
               </Text>
-              <Text style = {styles.positionTextStyle}>
+              <Text style={styles.positionTextStyle}>
                 ({latitude} , {longitude})
               </Text>
               <Text style={styles.puzzleTextStyle}>
@@ -72,8 +72,18 @@ export default function PuzzleMapScreen({ navigation, route }) {
     }
   }
 
+  const TopBar = () => {
+    return (
+      <Appbar style={styles.topBar}>
+        <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Oski Trail" />
+      </Appbar>
+    );
+  };
+
   return (
     <View>
+      {TopBar()}
       <MapView
         style={styles.mapStyle}
         showsUserLocation={true}
@@ -107,7 +117,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    height: Dimensions.get("window").height * 0.9,
   },
   headerStyle: {
     backgroundColor: "#003262",
@@ -156,5 +166,12 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     fontSize: 12,
     marginTop: 10,
+  },
+  top: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 90,
   },
 });
