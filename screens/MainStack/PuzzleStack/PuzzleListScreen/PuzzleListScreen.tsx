@@ -25,7 +25,7 @@ export function PuzzleListScreen ({navigation}) {
         <Card onPress = {()=> {navigation.navigate("PuzzleMapScreen")}} style = {styles.card}>
           <Card.Content>
             <Card.Cover source = {{uri:imageUrl}}/>
-            <Title > {'Oski Trail'} </Title>
+            <Title> {'Oski Trail'} </Title>
             <Paragraph> {'A thrilling puzzle that takes around the UC Berkeley campus.' }</Paragraph>
           </Card.Content>
         </Card>

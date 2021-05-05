@@ -19,9 +19,9 @@ export function MainScreen({ navigation }) {
   const playButton = () => {
     return (
       <View style={mainScreenStyles.playButton}>
-        <TouchableOpacity  onPress = {() => navigation.navigate('PuzzleStack')}>
+        <Button  onPress = {() => navigation.navigate('PuzzleStack')}>
           <Text> Puzzles </Text>
-        </TouchableOpacity>
+        </Button>
       </View>
     );
   };
@@ -108,7 +108,7 @@ export const mainScreenStyles = StyleSheet.create({
     borderTopRightRadius: 20,
     top: 400,
     left: 80,
-    padding: 10,
+    padding: 0,
     borderColor: "#FF52BA",
   },
 });
