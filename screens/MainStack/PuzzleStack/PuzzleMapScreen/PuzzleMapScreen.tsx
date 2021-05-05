@@ -28,7 +28,9 @@ export default function PuzzleMapScreen({ navigation, route }) {
     Inconsolata: require("../../../../assets/fonts/Inconsolata.otf"),
   });
   const [currentPuzzleText, setPuzzleText] = useState("");
-  const [puzzleNum, setPuzzleNum] = useState(8);
+  const [puzzleNum, setPuzzleNum] = useState(0);
+  const [distance, setDistance] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [timerVar, setTimerVar] = useState(0);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -40,7 +42,7 @@ export default function PuzzleMapScreen({ navigation, route }) {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
-  }, []);
+  }, [timerVar]);
 
   useEffect(() => {
     if (puzzleNum === 0) {
@@ -139,6 +141,26 @@ export default function PuzzleMapScreen({ navigation, route }) {
   let text = "Waiting..";
   let latitude = "";
   let longitude = "";
+  const allLats = [
+    37.8703,
+    37.87425,
+    37.87396,
+    37.883,
+    37.88748,
+    37.87661,
+    37.87314,
+    37.87136,
+  ];
+  const allLongs = [
+    -122.2595,
+    -122.26683,
+    -122.28309,
+    -122.27914,
+    -122.2692,
+    -122.26782,
+    -122.25946,
+    -122.25655,
+  ];
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -150,6 +172,41 @@ export default function PuzzleMapScreen({ navigation, route }) {
     //latitude = JSON.stringify(location.coords.latitude)
     //longitude = JSON.stringify(location.coords.longitude)
   }
+
+  useEffect(() => {
+    if (location["coords"] != null) {
+      latitude = location["coords"]["latitude"];
+      longitude = location["coords"]["longitude"];
+      let float_lat = parseFloat(latitude);
+      let float_long = parseFloat(longitude);
+      let distanceTemp = [0, 0, 0, 0, 0, 0, 0, 0];
+      console.warn("got here");
+      for (let i = 0; i < distanceTemp.length; i++) {
+        distanceTemp[i] =
+          Math.abs(float_lat - allLats[i]) + Math.abs(float_long - allLongs[i]);
+      }
+      setDistance(distanceTemp);
+      if (
+        puzzleNum === 0 &&
+        Math.abs(float_lat - 37.8673) + Math.abs(float_long - -122.2609) <
+          0.0004
+      ) {
+        setPuzzleNum(1);
+      }
+    }
+  }, [location]);
+  if (!loaded) {
+    return null;
+  }
+  /*useEffect(() => {
+    if (
+      location["timestamp"] != null &&
+      Date.now() - 10000 > location["timestamp"]
+    ) {
+      setTimerVar(timerVar + 1);
+      console.warn("timerVar is now" + timerVar);
+    }
+  });*/
 
   class SlidingPanel extends React.Component {
     render() {
@@ -168,7 +225,7 @@ export default function PuzzleMapScreen({ navigation, route }) {
                 Your current position is:
               </Text>
               <Text style={styles.positionTextStyle}>
-                ({latitude}, {longitude})
+                ({latitude}, {longitude}), {distance}, {text}
               </Text>
               <Text style={styles.puzzleTextStyle}>{currentPuzzleText}</Text>
             </View>
