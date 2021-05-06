@@ -180,7 +180,7 @@ export default function PuzzleMapScreen({ navigation, route }) {
       let float_lat = parseFloat(latitude);
       let float_long = parseFloat(longitude);
       let distanceTemp = [0, 0, 0, 0, 0, 0, 0, 0];
-      console.warn("got here");
+      //console.warn("got here");
       for (let i = 0; i < distanceTemp.length; i++) {
         distanceTemp[i] =
           Math.abs(float_lat - allLats[i]) + Math.abs(float_long - allLongs[i]);
@@ -225,7 +225,7 @@ export default function PuzzleMapScreen({ navigation, route }) {
                 Your current position is:
               </Text>
               <Text style={styles.positionTextStyle}>
-                ({latitude}, {longitude}), {distance}, {text}
+                ({latitude}, {longitude}){/* , {distance}, {text} */}
               </Text>
               <Text style={styles.puzzleTextStyle}>{currentPuzzleText}</Text>
             </View>
@@ -239,7 +239,9 @@ export default function PuzzleMapScreen({ navigation, route }) {
     return (
       <Appbar style={styles.topBar}>
         <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Oski Trail" />
+        <Appbar.Content
+          title={<Text style={styles.headerText}>Oski Trail</Text>}
+        />
       </Appbar>
     );
   };
@@ -348,5 +350,10 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
     alignItems: "center",
     height: 10000,
+  },
+  headerText: {
+    fontFamily: "Inconsolata",
+    alignItems: "center",
+    fontSize: 30,
   },
 });

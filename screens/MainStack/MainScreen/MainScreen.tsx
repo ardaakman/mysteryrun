@@ -5,26 +5,38 @@ import { greaterThan } from "react-native-reanimated";
 import { Appbar, Card, Button, Headline } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { TouchableOpacity } from "react-native";
+import { useFonts } from "expo-font";
+import { styles } from "../PuzzleStack/PuzzleListScreen/PuzzleListScreenStyles";
+import { white } from "react-native-paper/lib/typescript/styles/colors";
 
 export function MainScreen({ navigation }) {
   const dimensionprint = () => {
-    console.warn(Dimensions.get("window").width); 
+    console.warn(Dimensions.get("window").width);
     console.warn(Dimensions.get("window").height);
   };
 
   const runningIcon = () => {
-    return <Icon style={mainScreenStyles.runningIcon} name="running" size={200} />;
+    return (
+      <Icon style={mainScreenStyles.runningIcon} name="running" size={200} />
+    );
   };
 
   const playButton = () => {
     return (
       <View style={mainScreenStyles.playButton}>
-        <Button  onPress = {() => navigation.navigate('PuzzleStack')}>
-          <Text> Puzzles </Text>
+        <Button onPress={() => navigation.navigate("PuzzleStack")}>
+          <Text style={mainScreenStyles.puzzleText}> Puzzles </Text>
         </Button>
       </View>
     );
   };
+  const [loaded] = useFonts({
+    Inconsolata: require("../../../assets/fonts/Inconsolata.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   //dimensionprint();
 
@@ -49,7 +61,9 @@ export function MainScreen({ navigation }) {
   const TopBar = () => {
     return (
       <Appbar style={mainScreenStyles.top}>
-        <Appbar.Content title="Mystery Run" />
+        <Appbar.Content
+          title={<Text style={mainScreenStyles.headerText}>Mystery Run </Text>}
+        />
       </Appbar>
     );
   };
@@ -72,6 +86,8 @@ export const mainScreenStyles = StyleSheet.create({
     right: 0,
     top: 640,
     alignItems: "center",
+    flexDirection: "row",
+    alignContent: "space-between",
   },
   top: {
     position: "absolute",
@@ -79,16 +95,18 @@ export const mainScreenStyles = StyleSheet.create({
     right: 0,
     top: 0,
     height: 90,
+    fontFamily: "Inconsolata",
+    justifyContent: "center",
   },
   container: {
     flex: 1,
     justifyContent: "flex-start",
-    backgroundColor: "#fff",
+    backgroundColor: "gray",
   },
   middlePinkBox: {
     alignItems: "center",
     flex: 0.06,
-    backgroundColor: "#FF52BA",
+    //backgroundColor: "#FF52BA",
     top: 80,
   },
   runningIcon: {
@@ -100,7 +118,7 @@ export const mainScreenStyles = StyleSheet.create({
     position: "absolute",
     width: 160,
     alignItems: "center",
-    backgroundColor: "#FFFFFE",
+    backgroundColor: "gray",
     borderWidth: 3,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -110,5 +128,17 @@ export const mainScreenStyles = StyleSheet.create({
     left: 80,
     padding: 0,
     borderColor: "#FF52BA",
+    marginTop: 50,
+  },
+  headerText: {
+    fontFamily: "Inconsolata",
+    alignItems: "center",
+    fontSize: 30,
+  },
+  puzzleText: {
+    fontFamily: "Inconsolata",
+    alignItems: "center",
+    fontSize: 15,
+    color: "white",
   },
 });

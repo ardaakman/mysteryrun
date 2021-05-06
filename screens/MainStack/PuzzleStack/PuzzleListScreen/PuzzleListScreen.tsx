@@ -12,16 +12,27 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import { TouchableOpacity } from "react-native";
 import { styles, imageUrl } from "./PuzzleListScreenStyles";
 import SlidingUpPanel from "rn-sliding-up-panel";
+import { useFonts } from "expo-font";
 
 export function PuzzleListScreen({ navigation }) {
   const TopBar = () => {
     return (
       <Appbar style={styles.topPuzzles}>
         <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-        <Appbar.Content style={styles.header} title={"List Of Puzzles"} />
+        <Appbar.Content
+          style={styles.header}
+          title={<Text style={styles.headerText}>All Puzzles</Text>}
+        />
       </Appbar>
     );
   };
+  const [loaded] = useFonts({
+    Inconsolata: require("../../../../assets/fonts/Inconsolata.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -34,9 +45,8 @@ export function PuzzleListScreen({ navigation }) {
       >
         <Card.Content>
           <Card.Cover source={{ uri: imageUrl }} />
-          <Title> {"Oski Trail"} </Title>
-          <Paragraph>
-            {" "}
+          <Title style={styles.titleStyle}> {"Oski Trail"} </Title>
+          <Paragraph style={styles.descStyle}>
             {"A thrilling puzzle that will take you around North Berkeley."}
           </Paragraph>
         </Card.Content>
